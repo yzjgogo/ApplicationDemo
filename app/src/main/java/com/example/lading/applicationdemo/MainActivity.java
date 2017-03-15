@@ -120,49 +120,49 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.button0:
 //                observable.subscribe(subscriber);
-                observable.subscribe(subscriberAction);
+//                observable.subscribe(subscriberAction);
 //                startFilter();
 //                startMap();
-//                startThread();
+                startThread();
                 break;
             case R.id.button1:
-                intent = new Intent(MainActivity.this, NormalRxActivity.class);
+                intent = new Intent(MainActivity.this, NormalRxActivity.class);//学习简单的RXJAVA的流程
                 break;
             case R.id.button2:
-                intent = new Intent(MainActivity.this, RxMapActivity.class);
+                intent = new Intent(MainActivity.this, RxMapActivity.class);//操作符--MAP
                 break;
             case R.id.button3:
-                intent = new Intent(MainActivity.this, RxSchuderActivity.class);
+                intent = new Intent(MainActivity.this, RxSchuderActivity.class);//RXJAVA的线程调度
                 break;
             case R.id.button4:
-                intent = new Intent(MainActivity.this, RxFlatMapActivity.class);
+                intent = new Intent(MainActivity.this, RxFlatMapActivity.class);//操作符--FLATMAP
                 break;
             case R.id.button5:
-                intent = new Intent(MainActivity.this, RxMergeActivity.class);
+                intent = new Intent(MainActivity.this, RxMergeActivity.class);//操作符--合并
                 break;
             case R.id.button6:
-                intent = new Intent(MainActivity.this, RxBindingActivity.class);
+                intent = new Intent(MainActivity.this, RxBindingActivity.class);//基于RXJAVA的BINDING
                 break;
             case R.id.button7:
-                intent = new Intent(MainActivity.this, RxFilterActivity.class);
+                intent = new Intent(MainActivity.this, RxFilterActivity.class);//操作符--FILTER
                 break;
             case R.id.button8:
-                intent = new Intent(MainActivity.this, RxTakeActivity.class);
+                intent = new Intent(MainActivity.this, RxTakeActivity.class);//操作符--TAKE,DOONNEXT
                 break;
             case R.id.button9:
-                intent = new Intent(MainActivity.this, RxTimerActivity.class);
+                intent = new Intent(MainActivity.this, RxTimerActivity.class);//操作符--INTERVAL,取消订阅
                 break;
             case R.id.button10:
-                intent = new Intent(MainActivity.this, RxSortActivity.class);
+                intent = new Intent(MainActivity.this, RxSortActivity.class);//操作符--TOSORTEDLIST
                 break;
             case R.id.button11:
-                intent = new Intent(MainActivity.this, RxConnetActivity.class);
+                intent = new Intent(MainActivity.this, RxConnetActivity.class);//操作符--CONNECT
                 break;
             case R.id.button12:
-                intent = new Intent(MainActivity.this, TimestampActivity.class);
+                intent = new Intent(MainActivity.this, TimestampActivity.class);//操作符--
                 break;
         }
-//        startActivity(intent);
+        startActivity(intent);
     }
 
     /**
@@ -246,7 +246,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //指定了被观察者执行的线程环境
                 .subscribeOn(Schedulers.newThread())
                 //将接下来执行的线程环境指定为io线程
-//                .observeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
                 //使用map操作来完成类型转换
                 .map(new Func1<String, Integer>() {
                     @Override

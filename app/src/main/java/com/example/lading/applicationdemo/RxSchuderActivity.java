@@ -73,7 +73,7 @@ static  StringBuffer sb=null;
           .map(new Func1<Drawable, ImageView>() {
               @Override
               public ImageView call(Drawable drawable) {
-                  sb.append("map():  drawable -->imageview 的线程: "+Thread.currentThread().getName()+"\n\n");
+                  sb.append("map():  drawable -->imageview 的线程: "+Thread.currentThread().getName()+"\n\n end");
                   ImageView img=new ImageView(RxSchuderActivity.this);
                   LinearLayout.LayoutParams params= new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                   img.setLayoutParams(params);
