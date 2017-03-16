@@ -61,7 +61,7 @@ public class RxSortActivity extends AppCompatActivity implements View.OnClickLis
     private void start() {
         //
         Observable.from(words)
-                  .toSortedList()
+                  .toSortedList()//被排序的对象必须实现Comparable接口
                    .flatMap(new Func1<List<Integer>, Observable<Integer>>() {
                        @Override
                        public Observable<Integer> call(List<Integer> strings) {

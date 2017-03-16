@@ -53,8 +53,8 @@ public class RxTimerActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.button_cancal:
                     //取消订阅
-                     if (mSubscription!=null && !mSubscription.isUnsubscribed()){
-                         mSubscription.unsubscribe();
+                     if (mSubscription!=null && !mSubscription.isUnsubscribed()){//还没有注销
+                         mSubscription.unsubscribe();//注销
                      }
                     break;
         }
@@ -62,7 +62,7 @@ public class RxTimerActivity extends AppCompatActivity implements View.OnClickLi
 
     private void start() {
         //interval（）是运行在computation Scheduler线程中的，因此需要转到主线程
-        mSubscription=Observable.interval(1, TimeUnit.SECONDS)
+        mSubscription=Observable.interval(1, TimeUnit.SECONDS)//每隔一秒发送一次事件
                     .observeOn(AndroidSchedulers.mainThread())
                   .subscribe(new Action1<Long>() {
                       @Override

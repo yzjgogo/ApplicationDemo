@@ -85,6 +85,9 @@ public class RxConnetActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
+    /**
+     * 多个观察者都观察同一个被观察者，且这多个观察者能够同时收到被观察者发出的每一个事件
+     */
     private void start() {
 
         ConnectableObservable  observable= Observable.from(integer)

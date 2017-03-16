@@ -2,6 +2,7 @@ package com.example.lading.applicationdemo;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -57,13 +58,15 @@ public class RxTakeActivity extends AppCompatActivity implements View.OnClickLis
                   .filter(new Func1<Integer, Boolean>() {
                       @Override
                       public Boolean call(Integer integer) {
+                          Log.e("yin","执行过滤的call:"+integer);//只执行了1 2 3 4 5 6 7，而不是1 2 3 4 5 6 7 8 9 10
                           return integer%2!=0;
                       }
                   })
-                    //取前四个
-                    .take(4)
-                    //取前四个中的后两个
+                    //取前四个事件，也算是一种过滤，只保留前四个
+                    .take(4)//取狗4个奇数后，上面的call就不再执行
+                    //取前四个中的后两个事件
                     .takeLast(2)
+                    //每次执行onNext之前都会执行一次doOnNext,因此doOnNext的执行次数和onNext的执行次数相同
                     .doOnNext(new Action1<Integer>() {
                         @Override
                         public void call(Integer integer) {

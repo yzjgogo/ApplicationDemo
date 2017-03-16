@@ -12,6 +12,7 @@ import java.util.List;
 
 import rx.Observable;
 import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
@@ -78,7 +79,7 @@ public class TimestampActivity extends AppCompatActivity implements View.OnClick
 //                  });
         Observable.from(words)
                 .timestamp()
-//                .timestamp(Schedulers.io()) 可指定线程环境，如果指定到子线程，请在最后切换成主线程
+//                .timestamp(Schedulers.io()) //可指定线程环境，如果指定到子线程，请在最后切换成主线程
                 .subscribe(new Action1<Timestamped<Integer>>() {
                     @Override
                     public void call(Timestamped<Integer> integerTimestamped) {

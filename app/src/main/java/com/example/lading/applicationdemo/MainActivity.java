@@ -44,9 +44,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          */
         //正常模式
         observable = Observable.create(new Observable.OnSubscribe<String>() {
-
+            /**
+             * 当观察者订阅被观察者时调用该方法
+             * @param subscriber
+             */
             @Override
             public void call(Subscriber<? super String> subscriber) {
+                Log.e("yin","call被调用");
                 subscriber.onNext("On");
                 subscriber.onNext("Off");
                 subscriber.onNext("On");
@@ -119,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent = null;
         switch (view.getId()) {
             case R.id.button0:
-//                observable.subscribe(subscriber);
+                observable.subscribe(subscriber);
 //                observable.subscribe(subscriberAction);
 //                startFilter();
 //                startMap();

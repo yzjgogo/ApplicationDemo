@@ -2,6 +2,7 @@ package com.example.lading.applicationdemo;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -58,6 +59,7 @@ public class RxMergeActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void call(Subscriber<? super String> subscriber) {
                 try {
+                    Log.e("yin","第一个call所在线程："+Thread.currentThread().getName());
                     Thread.sleep(500);
                     subscriber.onNext(" aaa");
                     subscriber.onCompleted();
@@ -65,13 +67,14 @@ public class RxMergeActivity extends AppCompatActivity implements View.OnClickLi
                     e.printStackTrace();
                 }
             }
-        }).subscribeOn(Schedulers.newThread());
+        }).subscribeOn(Schedulers.newThread());//指定call方法执行的线程
 
         Observable obs2=Observable.create(new Observable.OnSubscribe<String>(){
 
             @Override
             public void call(Subscriber<? super String> subscriber) {
                 try {
+                    Log.e("yin","第二个call所在线程："+Thread.currentThread().getName());
                     Thread.sleep(1500);
                     subscriber.onNext("bbb");
                     subscriber.onCompleted();
@@ -82,22 +85,25 @@ public class RxMergeActivity extends AppCompatActivity implements View.OnClickLi
         }).subscribeOn(Schedulers.newThread());
 
         Observable.merge(obs1,obs2)
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())//(必须)切换线程到主线程，即onNext,onCompleted,onError执行的线程
                 .subscribe(new Subscriber<String>() {
                     StringBuffer sb=new StringBuffer();
+                    //合并完成onCompleted只执行一次
                     @Override
                     public void onCompleted() {
                         mText.append("两个任务都处理完毕！！\n");
                         mText.append("更新数据："+sb+"\n");
+                        Log.e("yin","onCompleted所在线程："+Thread.currentThread().getName());
                     }
 
                     @Override
                     public void onError(Throwable e) {
 
                     }
-
+                    //该执行多少次就执行多少次
                     @Override
                     public void onNext(String s) {
+                        Log.e("yin","onNext所在线程："+Thread.currentThread().getName());
                         sb.append( s+",");
                         mText.append("得到一个数据："+s+"\n");
                     }
