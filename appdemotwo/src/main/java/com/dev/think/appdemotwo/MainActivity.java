@@ -112,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.button11).setOnClickListener(this);
         findViewById(R.id.button12).setOnClickListener(this);
         findViewById(R.id.button13).setOnClickListener(this);
+        findViewById(R.id.button14).setOnClickListener(this);
 //        mBtn1= (Button) findViewById(R.id.button);
 //        mBtn1= (Button) findViewById(R.id.button);
 //        mBtn1= (Button) findViewById(R.id.button);
@@ -168,6 +169,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.button13:
                 intent = new Intent(MainActivity.this, BackPressureActivity.class);//背压
+                break;
+            case R.id.button14:
+                intent = new Intent(MainActivity.this, RxRelease2Activity.class);//背压
                 break;
         }
         startActivity(intent);

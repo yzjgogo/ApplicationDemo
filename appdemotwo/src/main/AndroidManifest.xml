@@ -24,6 +24,7 @@
         <activity android:name=".RxConnetActivity"></activity>
         <activity android:name=".TimestampActivity"></activity>
         <activity android:name=".BackPressureActivity"></activity>
+        <activity android:name=".RxRelease2Activity"></activity>
     </application>
 
 </manifest>

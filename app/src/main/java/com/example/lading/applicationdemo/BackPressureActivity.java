@@ -88,6 +88,8 @@ public class BackPressureActivity extends AppCompatActivity implements View.OnCl
      * 因为observeOn这个操作符内部有一个缓冲区，Android环境下长度是16，它会告诉range最多发送16个事件，充满缓冲区即可。
      *
      * 这段代码的目的是演示怎么使用响应式拉取，主要是request()的使用
+     *
+     * 使用该方式只有对支持压背的被观察者有效，不支持压背的被观察者不响应request()方法，仍然会报MissingBackpressureException
      */
     private void testBackpressure() {
         Observable observable = Observable.range(1,10000);
@@ -128,6 +130,10 @@ public class BackPressureActivity extends AppCompatActivity implements View.OnCl
     /**
      * 流速控制的操作符：过滤
      * 就是虽然生产者产生事件的速度很快，但是把大部分的事件都直接过滤（浪费）掉，从而间接的降低事件发送的速度。
+     *
+     * 还有一个操作符ThrottleFirst，类似于过滤操作
+     *
+     * 该方式对不支持压背的被观察者也有效
      */
 
     private void testSampleBackpressure() {
@@ -147,6 +153,11 @@ public class BackPressureActivity extends AppCompatActivity implements View.OnCl
                 });
     }
 
+    /**
+     * 还有一个缓存的操作符window
+     *
+     * 该方式对不支持压背的被观察者也有效
+     */
     private void testBuffer() {
         Observable.interval(1,TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.newThread())
@@ -189,6 +200,14 @@ public class BackPressureActivity extends AppCompatActivity implements View.OnCl
      03-24 19:09:02.236 23669-25852/com.example.lading.applicationdemo E/yin: ---->1213
 
      之所以出现0-15这样连贯的数据，就是是因为observeOn操作符内部有一个长度为16的缓存区，它会首先请求16个事件缓存起来.
+
+
+     onBackpressureDrop：将observable发送的事件抛弃掉，直到subscriber再次调用request（n）方法的时候，就发送给它这之后的n个事件
+
+
+     你可能会觉得这两个操作符和上面讲的Sample、ThrottleFirst、、buffer、window等过滤和缓存很类似，确实，功能上是有些类似，
+     但是这两个操作符提供了更多的特性，那就是可以响应下游观察者的request(n)方法了，也就是说，使用了这两种操作符，
+     可以让原本不支持背压的Observable“支持”背压了
 
      */
     private void testOnBackpressureDrop() {
